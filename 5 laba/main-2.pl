@@ -9,6 +9,7 @@
 
 use 5.010;
 use Getopt::Long;
+use Encode qw(encode decode);
 
 sub get_pretty_time {
 	my ($ctime) = @_;
@@ -33,10 +34,11 @@ sub print_fs_tree {
 	while (my $file = readdir($dir)) {
 		next if ($file =~ /^\..*/);		
 		for my $i (1..$offset) { print " "; }
-		if (-d $file) {
-			print "folder: '$file'\n";
+		my $name = decode("cp1251", $file);
+		if (-d $file) {			
+			print "folder: '$name'\n";
 			my $next_path = "$path/$file";
-			opendir(my $next_dir, "$next_path") or die("FolderError - $next_path\n");
+			opendir(my $next_dir, "$next_path") or die("FolderError - $next_path ($!)\n");
 			chdir($next_path);
 			print_fs_tree($next_dir, $next_path, $offset + 4);
 			chdir($path);
@@ -44,34 +46,33 @@ sub print_fs_tree {
 		}
 		if (-f $file) {
 			my $file_info = get_file_info($file);
-			print "file: '$file' $file_info";
+			print "file: '$name' $file_info";
 		}
 	}
 }
 
-################################################################################################
-
+# Получение аргументов из терминала
 my ($path_folder, $path_output);
-GetOptions(
-	"folder=s" => \$path_folder,
-	"file=s"   => \$path_output);
+GetOptions("folder=s" => \$path_folder, "file=s" => \$path_output);
+$path_folder =~ s{\\}{\/}g;
+$path_output =~ s{\\}{\/}g;
 
-chomp $path_folder;
-chomp $path_output;
-
+# Проверка, что все необходимые аргументы введены
 unless ($path_folder) {
 	say "Folder path empty";
 	say "Please add argument '--folder <path_to_folder>'";
 	exit;
 }
 
+# Если указан файл, то пишем в него
 if ($path_output) {
-	open(my $file, ">$path_output") or die("OutputFileError\n");
+	open(my $file, ">:encoding(utf-8)", $path_output) or die("OutputFileError ($!)\n");
 	select $file;
 }
 
+# вывод дерева
 say $path_folder;
-opendir(my $root, "$path_folder") or die("FolderError - $path_folder\n");
+opendir(my $root, "$path_folder") or die("FolderError - $path_folder ($!)\n");
 chdir($path_folder);
 print_fs_tree($root, $path_folder, 0);
 closedir($root);

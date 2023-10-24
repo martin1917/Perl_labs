@@ -13,7 +13,7 @@ sub delete_files_by_ext {
 		next if ($file =~ /^\..*/);
 		if (-d $file) {
 			my $next_path = "$path/$file";
-			opendir(my $next_dir, "$next_path") or die("FolderError - $next_path\n");
+			opendir(my $next_dir, "$next_path") or die("FolderError - $next_path ($!)\n");
 			chdir($next_path);
 			delete_files_by_ext($next_dir, $next_path, $ext);
 			chdir($path);
@@ -22,28 +22,29 @@ sub delete_files_by_ext {
 	}
 }
 
-################################################################################################
-
+# Получение аргументов из терминала
 my ($path_folder, $ext);
-GetOptions(
-	"folder=s" => \$path_folder,
-	"ext=s"   => \$ext);
+GetOptions("folder=s" => \$path_folder, "ext=s" => \$ext);
+$path_folder =~ s{\\}{\/}g;
 
-chomp $path_folder;
-chomp $ext;
-
+# Проверка, что все необходимые аргументы введены
+my $error = "";
 unless ($path_folder) {
-	say "Folder path is empty";
-	say "Please add argument '--folder <path_to_folder>'";
-	exit;
+	$error .= "Folder path is empty\n";
+	$error .= "Please add argument '--folder <path_to_folder>'\n";
 }
 
 unless ($ext) {
-	say "extension is empty";
-	say "Please add argument '--ext <extension> (example: .exe, .txt)'";
+	$error .= "extension is empty\n";
+	$error .= "Please add argument '--ext <extension> (example: exe, txt)'\n";
+}
+
+if (length($error) > 0) {
+	print $error;
 	exit;
 }
 
+# удаляем файл с указанным расширением
 opendir(my $root, "$path_folder") or die("FolderError - $path_folder\n");
 chdir($path_folder);
 delete_files_by_ext($root, $path_folder, $ext);

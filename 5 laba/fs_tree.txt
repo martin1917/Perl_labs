@@ -1,4 +1,4 @@
-D:\Projects\Perl
+D:/Projects/Perl
 folder: '1 laba'
     file: 'main-3.pl' bytes: 295; dt: 17.10.2023 21:43:57; read: 1; write: 1
     file: 'main_1.pl' bytes: 400; dt: 17.10.2023 21:43:57; read: 1; write: 1
@@ -19,19 +19,36 @@ folder: '4 laba'
     file: 'evm.pm' bytes: 1437; dt: 2.10.2023 22:55:57; read: 1; write: 1
     file: 'main.pm' bytes: 3630; dt: 2.10.2023 21:53:36; read: 1; write: 1
 folder: '5 laba'
-    file: 'fs_tree.txt' bytes: 0; dt: 18.10.2023 0:13:38; read: 1; write: 1
+    folder: '2_task_test'
+        folder: 'inner'
+            folder: 'inner_inner'
+    file: 'fs_tree.txt' bytes: 1040; dt: 18.10.2023 0:13:38; read: 1; write: 1
     file: 'hanoi_solution.txt' bytes: 635; dt: 17.10.2023 22:33:40; read: 1; write: 1
     file: 'main-1.pl' bytes: 1212; dt: 17.10.2023 22:30:59; read: 1; write: 1
-    file: 'main-2.pl' bytes: 2672; dt: 17.10.2023 22:31:19; read: 1; write: 1
-    file: 'main-3.pl' bytes: 0; dt: 17.10.2023 22:31:32; read: 1; write: 1
-    file: 'main-4.pl' bytes: 0; dt: 17.10.2023 22:31:42; read: 1; write: 1
+    file: 'main-2.pl' bytes: 2851; dt: 17.10.2023 22:31:19; read: 1; write: 1
+    file: 'main-3.pl' bytes: 1597; dt: 17.10.2023 22:31:32; read: 1; write: 1
+    file: 'main-4.pl' bytes: 1775; dt: 17.10.2023 22:31:42; read: 1; write: 1
     folder: 'mamka'
-        file: '1.txt' bytes: 0; dt: 17.10.2023 23:23:35; read: 1; write: 1
-        file: '2.txt' bytes: 0; dt: 17.10.2023 23:23:42; read: 1; write: 1
+        file: '1.txt' bytes: 1; dt: 17.10.2023 23:23:35; read: 1; write: 1
+        file: '2.txt' bytes: 1; dt: 17.10.2023 23:23:42; read: 1; write: 1
         folder: 'inner'
-            file: '3.txt' bytes: 2; dt: 17.10.2023 23:23:48; read: 1; write: 1
-            file: '4.txt' bytes: 0; dt: 17.10.2023 23:23:59; read: 1; write: 1
+            file: '3.txt' bytes: 4; dt: 17.10.2023 23:23:48; read: 1; write: 1
+            file: '4.txt' bytes: 1; dt: 17.10.2023 23:23:59; read: 1; write: 1
+            file: 'отчет.docx' bytes: 0; dt: 24.10.2023 15:47:59; read: 1; write: 1
+        file: 'документ.docx' bytes: 0; dt: 24.10.2023 15:47:48; read: 1; write: 1
+        file: 'мир.docx' bytes: 0; dt: 24.10.2023 15:48:48; read: 1; write: 1
     folder: 'papka'
-        file: 'hello.txt' bytes: 0; dt: 17.10.2023 23:24:6; read: 1; write: 1
-        file: 'test.txt' bytes: 0; dt: 17.10.2023 23:24:17; read: 1; write: 0
-        file: 'world.txt' bytes: 0; dt: 17.10.2023 23:24:11; read: 1; write: 1
+        file: 'hello.txt' bytes: 5; dt: 17.10.2023 23:24:6; read: 1; write: 1
+        file: 'test.txt' bytes: 4; dt: 17.10.2023 23:24:17; read: 1; write: 0
+        file: 'world.txt' bytes: 5; dt: 17.10.2023 23:24:11; read: 1; write: 1
+    folder: 'Привет мир'
+        file: 'клад.docx' bytes: 0; dt: 24.10.2023 15:48:34; read: 1; write: 1
+folder: '6 laba'
+    file: 'arabic_digits.txt' bytes: 87; dt: 23.10.2023 22:37:47; read: 1; write: 1
+    file: 'arabic_digits_res.txt' bytes: 87; dt: 23.10.2023 22:43:6; read: 1; write: 1
+    file: 'cp866.txt' bytes: 48; dt: 23.10.2023 22:44:14; read: 1; write: 1
+    file: 'main-1.pl' bytes: 826; dt: 23.10.2023 14:30:56; read: 1; write: 1
+    file: 'main-2.pl' bytes: 1690; dt: 23.10.2023 14:47:41; read: 1; write: 1
+    file: 'main-3.pl' bytes: 1315; dt: 23.10.2023 22:40:53; read: 1; write: 1
+    file: 'main-4.pl' bytes: 1602; dt: 23.10.2023 18:24:52; read: 1; write: 1
+    file: 'rim_digits_res.txt' bytes: 103; dt: 23.10.2023 22:42:55; read: 1; write: 1
