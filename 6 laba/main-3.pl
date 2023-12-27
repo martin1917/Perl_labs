@@ -40,8 +40,8 @@ unless ($path_file) {
 open(my $fileRead, "<", $path_file) or die("Нет такого файла\n");
 open(my $fileWrite, ">", "arabic_digits_res.txt");
 
-while(my $line = <$fileRead>) {
-	$line =~ s/([IVXLCDM]+)/roman_to_arabic($1)/ge;
+while(my $line = <$fileRead>) {	
+	$line =~ s{^(?=.)(M*)(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$}{roman_to_arabic("$1$2$3$4")}ge;
 	print $fileWrite $line;
 }
 

@@ -6,3 +6,66 @@
 # строку. Предусмотреть возможность вызова программы в двух режимах:
 # 	— с учетом регистра;
 # 	— без учета регистра.
+
+use 5.010;
+use utf8;
+
+# Вводим корень дерева каталогов
+print "Введите путь к корневому каталогу: ";
+my $root_dir = <STDIN>;
+chomp $root_dir;
+$root_dir =~ s{\\}{\/}g;
+
+# Вводим последовательность символов
+print "Введите последовательность символов: ";
+my $sequence = <STDIN>;
+chomp $sequence;
+
+# Вводим режим (с учетом регистра или без)
+print "Учитывать регистр? (y/n): ";
+my $mode = <STDIN>;
+chomp $mode;
+
+# Запускаем программу
+search_files($root_dir);
+
+# Функция для обработки файла и поиска последовательности символов
+sub process_file {
+    my ($file) = @_;    
+    open(my $fh, '<', $file) or die "Не удалось открыть файл '$file': $!";    
+    
+	my $count = 0;    
+    while (my $line = <$fh>) {
+        if ($mode eq 'y' && $line =~ m/$sequence/) {
+            $count++;
+        }
+        elsif ($mode eq 'n' && $line =~ m/$sequence/i) {
+            $count++;
+        }
+    }
+    
+    close($fh);
+    
+    if ($count > 0) {
+        print "Файл: $file, Количество совпадений: $count\n";
+    }
+}
+
+# Функция для обхода дерева каталогов и поиска файлов
+sub search_files {
+    my ($dir) = @_;    
+    opendir(my $dh, $dir) or die "Не удалось открыть каталог '$dir': $!";
+    
+    while (my $file = readdir($dh)) {
+        next if ($file eq '.' or $file eq '..');        
+        my $path = "$dir/$file";        
+        if (-d $path) {
+            search_files($path);
+        }
+        elsif (-f $path) {
+            process_file($path);
+        }
+    }
+    
+    closedir($dh);
+}

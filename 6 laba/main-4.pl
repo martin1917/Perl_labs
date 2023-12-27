@@ -3,30 +3,33 @@
 # кодировки выбираются в соответствии с номером бригады.
 
 use 5.010;
-use Getopt::Long;
+use utf8;
 
+# Выбор преобразования
 say "Преобразовать файл:";
-my ($from_encoding, $to_encoding);
+my $answer;
+my ($from, $to);
 while (1) {
 	print "1. из кодировки 'cp866'  в кодировку 'cp1251'\n";
 	print "2. из кодировки 'cp1251' в кодировку 'cp866'\n";
 	print "выбор: ";
-	my $answer = <STDIN>;
+	$answer = <STDIN>;
 	chomp $answer;
 	
 	if ($answer == 1) {
-		($from_encoding, $to_encoding) = ("cp866", "cp1251");
+		($from, $to) = ("cp866", "cp1251");
 		last;
 	}
-	elsif ($answer == 2) {
-		($from_encoding, $to_encoding) = ("cp1251", "cp866");
+	
+	if ($answer == 2) {
+		($from, $to) = ("cp1251", "cp866");
 		last;
 	}
-	else {
-		say "Напишите 1 или 2!!!";
-	}
+	
+	say "Напишите 1 или 2";
 }
 
+# Путь исходного файла
 say "Укажите путь до файла:";
 my $path_file;
 while (1) {
@@ -41,13 +44,25 @@ while (1) {
 	}
 }
 
+# Путь результирующего файла
 say "Укажите название файла для сохранения:";
 print "путь: ";
 my $save_path = <STDIN>;
 chomp $save_path;
 
-open(my $fileRead, "<:encoding($from_encoding)", $path_file) or die("Нет такого файла\n");
-open(my $fileWrite, ">:encoding($to_encoding)", $save_path);
-print $fileWrite $_ while(<$fileRead>);
+open(my $fileRead, "<:encoding($from)", $path_file) or die("Нет такого файла\n");
+open(my $fileWrite, ">:encoding($to)", $save_path);
+
+while (my $line = <$fileRead>) {
+	if ($answer == 1) {
+		$line =~ tr{\x80-\x9F\xA0-\xEF}{\xC0-\xDF\xE0-\xFF};
+	}
+	if ($answer == 2) {
+		$line =~ tr{\xC0-\xDF\xE0-\xFF}{\x80-\x9F\xA0-\xEF};
+	}
+	
+	print $fileWrite $line;
+}
+
 close($fileWrite);
 close($fileRead);

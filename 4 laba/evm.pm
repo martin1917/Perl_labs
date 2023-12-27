@@ -20,18 +20,18 @@ sub new {
 
 sub info {
 	my $self = shift;
-	say "Type of EVM: $self->{type}";
-	say "Number: $self->{number}";
-	say "CPU: $self->{cpu}";
-	say "RAM: $self->{ram}";
-	say "domain: $self->{domain}";
+	say "Номер: $self->{number}";
+	say "Название ЭВМ: $self->{type}";
+	say "Процессор: $self->{cpu}";
+	say "Объем ОЗУ: $self->{ram}";
+	say "домен: $self->{domain}";
 	print "\n";
 }
 
 # работа с двумя объектами
 sub comp_ram {
 	my ($self, $other) = @_;
-	return ($self->{ram} > $other->{ram})
+	return ($self->{ram} <=> $other->{ram})
 }
 
 # копирование объекта
@@ -54,7 +54,7 @@ sub inc_ram {
 	my $value = shift;
 	
 	if ($value < 0) {
-		say "volume of ram must be more 0!";
+		say "Добавляемый объем ОЗУ должен быть больше нуля!";
 		return;
 	}
 	
@@ -62,6 +62,3 @@ sub inc_ram {
 }
 
 1;
-
-# список объектов
-# метод работающий с двумя объектами (конструктор копии / сравнение)

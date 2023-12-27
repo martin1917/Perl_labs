@@ -1,4 +1,6 @@
 use 5.010;
+use Encode qw(encode decode);
+use utf8;
 
 # вывод состояния каждого из стержней
 sub info {
@@ -31,7 +33,7 @@ sub hanoi {
 	}
 }
 
-print "Write N: ";
+print "Напишите N: ";
 my $n = <>;
 chomp $n;
 
@@ -40,11 +42,11 @@ my $b = { name => "B", disks => [] };
 my $c = { name => "C", disks => [] };
 
 my $file_path = "hanoi_solution.txt";
-open(my $file, ">$file_path") or die("File error\n");
+open(my $file, ">$file_path") or die("Ошибка открытия файла $!\n");
 select $file;
 
 info($a, $c, $b);
 hanoi($a, $b, $c, $n);
 
 select STDOUT;
-say "check solution in $file_path";
+say "Смотри решение в $file_path";

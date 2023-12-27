@@ -5,6 +5,8 @@
 
 use 5.010;
 use Getopt::Long;
+use Encode qw(encode decode);
+use utf8;
 
 sub delete_files_by_ext {
 	my ($dir, $path, $ext) = @_;
@@ -13,7 +15,7 @@ sub delete_files_by_ext {
 		next if ($file =~ /^\..*/);
 		if (-d $file) {
 			my $next_path = "$path/$file";
-			opendir(my $next_dir, "$next_path") or die("FolderError - $next_path ($!)\n");
+			opendir(my $next_dir, "$next_path") or die("FolderError - $next_path\n");
 			chdir($next_path);
 			delete_files_by_ext($next_dir, $next_path, $ext);
 			chdir($path);
@@ -22,29 +24,27 @@ sub delete_files_by_ext {
 	}
 }
 
-# Получение аргументов из терминала
 my ($path_folder, $ext);
-GetOptions("folder=s" => \$path_folder, "ext=s" => \$ext);
-$path_folder =~ s{\\}{\/}g;
+GetOptions(
+	"folder=s" => \$path_folder,
+	"ext=s"   => \$ext);
 
-# Проверка, что все необходимые аргументы введены
-my $error = "";
+chomp $path_folder;
+chomp $ext;
+
 unless ($path_folder) {
-	$error .= "Folder path is empty\n";
-	$error .= "Please add argument '--folder <path_to_folder>'\n";
-}
-
-unless ($ext) {
-	$error .= "extension is empty\n";
-	$error .= "Please add argument '--ext <extension> (example: exe, txt)'\n";
-}
-
-if (length($error) > 0) {
-	print $error;
+	say "Аргумент 'folder' не указан";
+	say "Пожалуйста добавьте аргумент '--folder <path_to_folder>'";
 	exit;
 }
 
-# удаляем файл с указанным расширением
+unless ($ext) {	
+	say "Аргумент 'ext' не указан";
+	say "Пожалуйста добавьте аргумент '--ext <extension> (например, exe, txt)'";
+	exit;
+}
+
+$path_folder =~ s{\\}{\/}g;
 opendir(my $root, "$path_folder") or die("FolderError - $path_folder\n");
 chdir($path_folder);
 delete_files_by_ext($root, $path_folder, $ext);
